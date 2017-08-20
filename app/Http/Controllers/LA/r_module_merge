@@ -1,0 +1,2 @@
+file_names <- dir()
+your_data_frame <- do.call(rbind,lapply(file_names,read.csv))
