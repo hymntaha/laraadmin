@@ -45,47 +45,16 @@ class UploadMergeController extends Controller
             //exec("Rscript test.R $file_names", $results);
             //Basically $result needs to return final_data.csv. So I can run that tables into template.
 
-            exec("cat $file_names[0] > final_data.csv && cat file_names[1] >> final_data.csv");
+            //exec("cat $file_names[0] > final_data.csv && cat file_names[1] >> final_data.csv");
 
-            $row = 1;
-            if (($handle = fopen('../final_data.csv', "r")) !== FALSE)
-            {
-                echo '<table border="1">';
-
-                while (($data = fgetcsv($handle, 1000, ";")) !== FALSE)
-                {
-                    $num = count($data);
-                    if ($row == 1) {
-                        echo '<thead><tr>';
-                    }else{
-                        echo '<tr>';
-                    }
-
-                    for ($c=0; $c < $num; $c++) {
-                        //echo $data[$c] . "<br />\n";
-                        if(empty($data[$c])) {
-                            $value = "&nbsp;";
-                        }else{
-                            $value = $data[$c];
-                        }
-                        if ($row == 1) {
-                            echo '<th>'.$value.'</th>';
-                        }else{
-                            echo '<td>'.$value.'</td>';
-                        }
-                    }
-                    if ($row == 1) {
-                        echo '</tr></thead><tbody>';
-                    }else{
-                        echo '</tr>';
-                    }
-                    $row++;
-                }
-
-                echo '</tbody></table>';
-                fclose($handle);
+        $rows = array();
+        if (($handle = fopen("../storage/app/public/csv2.csv", "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $rows[] = $data;
             }
-            return view('la/uploadmerge/upload');
+            fclose($handle);
         }
+
+        return view('la/uploadmerge/upload')->with('rows',$rows);
     }
 }

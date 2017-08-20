@@ -16,8 +16,8 @@ Route::get('/', function () {
 });
 
 Route::get('admin/importExport', 'UploadMergeController@importExport');
-Route::get('admin/downloadExcel/{type}', 'UploadMergeController@downloadExcel');
-Route::get('/admin/importExcel', 'UploadMergeController@importExcel');
+Route::get('admin/importExport/{type}', 'UploadMergeController@downloadExcel');
+Route::get('/admin/importExport', 'UploadMergeController@importExcel');
 Route::post('/admin/importExcel', 'UploadMergeController@importExcel');
 
 /* ================== Homepage + Admin Routes ================== */
